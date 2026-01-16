@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERA CRM</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#fff5f5 0%,#f3f4f6 100%);min-height:100vh}.container{max-width:1280px;margin:0 auto;padding:24px}.header{margin-bottom:32px}.header-flex{display:flex;align-items:center;gap:12px;margin-bottom:8px}.logo{background:#dc2626;color:white;padding:8px 16px;border-radius:6px;font-weight:bold;font-size:20px}h1{font-size:30px;font-weight:bold;color:#1f2937}.subtitle{color:#6b7280}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}.stat-card{background:white;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}.stat-label{color:#6b7280;font-size:14px}.stat-value{font-size:24px;font-weight:bold;margin-top:4px}.search-bar{background:white;padding:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);margin-bottom:24px;display:flex;gap:16px;flex-wrap:wrap}.search-input{flex:1;min-width:200px;padding:10px 16px;border:1px solid #d1d5db;border-radius:8px;font-size:14px}.btn{padding:10px 24px;border:none;border-radius:8px;font-weight:500;cursor:pointer;font-size:14px;transition:all .2s}.btn-primary{background:#dc2626;color:white}.btn-primary:hover{background:#b91c1c}.btn-secondary{background:white;border:1px solid #d1d5db;color:#374151}.btn-secondary:hover{background:#f9fafb}.btn-icon{padding:8px;background:none;border:none;cursor:pointer;border-radius:6px;transition:all .2s}.btn-icon:hover{background:#f3f4f6}.main-grid{display:grid;grid-template-columns:1fr 2fr;gap:24px}@media (max-width:1024px){.main-grid{grid-template-columns:1fr}.search-bar{flex-direction:column}}.card{background:white;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);overflow:hidden}.card-header{padding:16px;background:#f9fafb;border-bottom:1px solid #e5e7eb;font-weight:600}.client-list{max-height:600px;overflow-y:auto}.client-item{padding:16px;border-bottom:1px solid #e5e7eb;cursor:pointer;transition:background .2s}.client-item:hover{background:#f9fafb}.client-item.active{background:#fef2f2;border-left:4px solid #dc2626}.client-name{font-weight:600;color:#1f2937;margin-bottom:4px}.client-phone{font-size:14px;color:#6b7280}.badge{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;margin-top:8px}.badge-buyer{background:#dbeafe;color:#1e40af}.badge-seller{background:#d1fae5;color:#065f46}.badge-tenant{background:#e0e7ff;color:#5b21b6}.badge-landlord{background:#fed7aa;color:#92400e}.client-details{padding:24px}.details-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:24px;flex-wrap:wrap;gap:16px}.details-name{font-size:24px;font-weight:bold;color:#1f2937}.btn-group{display:flex;gap:8px}.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:24px}@media (max-width:768px){.details-grid{grid-template-columns:1fr}}.detail-section h3{font-weight:600;color:#374151;margin-bottom:12px}.detail-item{color:#6b7280;margin-bottom:8px;font-size:14px}.notes{background:#f9fafb;padding:16px;border-radius:8px;margin-top:24px}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:start;justify-content:center;z-index:50;padding-top:80px;overflow-y:auto}.modal-overlay.active{display:flex}.modal{background:white;border-radius:8px;max-width:800px;width:100%;margin:16px;max-height:80vh;overflow-y:auto}.modal-header{padding:24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}.modal-body{padding:24px}.form-group{margin-bottom:16px}.form-label{display:block;font-size:14px;font-weight:500;margin-bottom:4px;color:#374151}.form-input,.form-select,.form-textarea{width:100%;padding:10px 16px;border:1px solid #d1d5db;border-radius:8px;font-size:14px}.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:#dc2626}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media (max-width:640px){.form-grid{grid-template-columns:1fr}}.modal-footer{padding:24px;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:12px}.empty-state{padding:64px 24px;text-align:center;color:#9ca3af}a{color:inherit;text-decoration:none}a:hover{color:#dc2626}.section-title{font-weight:600;margin:24px 0 12px;padding-top:16px;border-top:1px solid #e5e7eb}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-flex">
+                <div class="logo">ERA</div>
+                <h1>Client & Lead Management</h1>
+            </div>
+            <p class="subtitle">Track your clients and leads for better relationship management</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card"><div class="stat-label">Total Clients</div><div class="stat-value" id="stat-total">0</div></div>
+            <div class="stat-card"><div class="stat-label">Buyers</div><div class="stat-value" style="color:#2563eb" id="stat-buyers">0</div></div>
+            <div class="stat-card"><div class="stat-label">Sellers</div><div class="stat-value" style="color:#16a34a" id="stat-sellers">0</div></div>
+            <div class="stat-card"><div class="stat-label">Tenants</div><div class="stat-value" style="color:#7c3aed" id="stat-tenants">0</div></div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search by name, phone, or email..." id="searchInput">
+            <button class="btn btn-primary" onclick="openModal()">+ Add Client</button>
+        </div>
+
+        <div class="main-grid">
+            <div class="card">
+                <div class="card-header" id="clientListHeader">Clients & Leads (0)</div>
+                <div class="client-list" id="clientList"><div class="empty-state"><p>No clients found</p></div></div>
+            </div>
+            <div class="card"><div id="clientDetails"><div class="empty-state"><p>Select a client to view details</p></div></div></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Client</h2>
+                <button class="btn-icon" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="i-name"></div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Phone *</label><input type="tel" class="form-input" id="i-phone" placeholder="+65 XXXX XXXX"></div>
+                    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="i-email"></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Nationality</label><input type="text" class="form-input" id="i-nationality"></div>
+                    <div class="form-group"><label class="form-label">Occupation</label><input type="text" class="form-input" id="i-occupation"></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Religion</label><select class="form-select" id="i-religion"><option value="">Select</option><option>Buddhism</option><option>Christianity</option><option>Islam</option><option>Hinduism</option><option>Taoism</option><option>No Religion</option><option>Other</option></select></div>
+                    <div class="form-group"><label class="form-label">Marital Status</label><select class="form-select" id="i-maritalStatus"><option value="">Select</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Number of Kids</label><input type="number" class="form-input" id="i-kids" min="0"></div>
+                    <div class="form-group"><label class="form-label">Lead Type</label><select class="form-select" id="i-leadType"><option>buyer</option><option>seller</option><option>tenant</option><option>landlord</option></select></div>
+                </div>
+                <h3 class="section-title">Current Property</h3>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Type</label><select class="form-select" id="i-curType"><option value="">Select</option><option>HDB 2-Room</option><option>HDB 3-Room</option><option>HDB 4-Room</option><option>HDB 5-Room</option><option>HDB Executive</option><option>Condominium</option><option>Landed</option></select></div>
+                    <div class="form-group"><label class="form-label">Location</label><input type="text" class="form-input" id="i-curLoc"></div>
+                </div>
+                <h3 class="section-title">Desired Property</h3>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Type</label><select class="form-select" id="i-desType"><option value="">Select</option><option>HDB 2-Room</option><option>HDB 3-Room</option><option>HDB 4-Room</option><option>HDB 5-Room</option><option>HDB Executive</option><option>Condominium</option><option>Landed</option></select></div>
+                    <div class="form-group"><label class="form-label">Location</label><input type="text" class="form-input" id="i-desLoc"></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Bedrooms</label><input type="text" class="form-input" id="i-beds"></div>
+                    <div class="form-group"><label class="form-label">Budget (SGD)</label><input type="text" class="form-input" id="i-budget"></div>
+                </div>
+                <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="i-notes" rows="3"></textarea></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveClient()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let clients=[];let sel=null;let editId=null;
+        loadClients();addSample();
+
+        function loadClients(){
+            const s=localStorage.getItem('era_clients');
+            if(s){clients=JSON.parse(s);render();updateStats();}
+        }
+
+        function save(){
+            localStorage.setItem('era_clients',JSON.stringify(clients));
+            render();updateStats();
+        }
+
+        function addSample(){
+            if(clients.length===0){
+                clients=[{id:'s1',name:'Tan Wei Ming',phone:'+65 9123 4567',email:'weiming@email.com',nationality:'Singaporean',occupation:'Software Engineer',religion:'Buddhism',maritalStatus:'Married',numberOfKids:'2',leadType:'buyer',desiredPropertyType:'HDB 4-Room',desiredPropertyLocation:'Tampines',budget:'800000',notes:'Looking for upgraded HDB'}];
+                save();
+            }
+        }
+
+        function render(){
+            const term=document.getElementById('searchInput').value.toLowerCase();
+            const filtered=clients.filter(c=>c.name.toLowerCase().includes(term)||c.phone.includes(term)||(c.email&&c.email.toLowerCase().includes(term)));
+            document.getElementById('clientListHeader').textContent=`Clients & Leads (${filtered.length})`;
+            const list=document.getElementById('clientList');
+            if(filtered.length===0){list.innerHTML='<div class="empty-state"><p>No clients found</p></div>';return;}
+            list.innerHTML=filtered.map(c=>`<div class="client-item ${sel?.id===c.id?'active':''}" onclick="selectClient('${c.id}')"><div class="client-name">${c.name}</div><div class="client-phone">${c.phone}</div><span class="badge badge-${c.leadType}">${c.leadType}</span></div>`).join('');
+        }
+
+        function selectClient(id){
+            sel=clients.find(c=>c.id===id);
+            render();renderDetail();
+        }
+
+        function renderDetail(){
+            if(!sel){document.getElementById('clientDetails').innerHTML='<div class="empty-state"><p>Select a client</p></div>';return;}
+            const c=sel;
+            document.getElementById('clientDetails').innerHTML=`
+                <div class="client-details">
+                    <div class="details-header">
+                        <div><div class="details-name">${c.name}</div><span class="badge badge-${c.leadType}">${c.leadType}</span></div>
+                        <div class="btn-group">
+                            <button class="btn-icon" onclick="openWA('${c.phone}','${c.name}')" title="WhatsApp">💬</button>
+                            <button class="btn-icon" onclick="editClient('${c.id}')">✏️</button>
+                            <button class="btn-icon" onclick="deleteClient('${c.id}')">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-section"><h3>Contact</h3><div class="detail-item">📞 <a href="tel:${c.phone}">${c.phone}</a></div>${c.email?`<div class="detail-item">📧 ${c.email}</div>`:''}</div>
+                        <div class="detail-section"><h3>Personal</h3>
+                            ${c.nationality?`<div class="detail-item">Nationality: ${c.nationality}</div>`:''}
+                            ${c.occupation?`<div class="detail-item">Occupation: ${c.occupation}</div>`:''}
+                            ${c.religion?`<div class="detail-item">Religion: ${c.religion}</div>`:''}
+                            ${c.maritalStatus?`<div class="detail-item">Marital: ${c.maritalStatus}</div>`:''}
+                            ${c.numberOfKids?`<div class="detail-item">Kids: ${c.numberOfKids}</div>`:''}
+                        </div>
+                    </div>
+                    ${c.currentPropertyType||c.currentPropertyLocation?`<div class="detail-section" style="margin-top:24px;padding-top:24px;border-top:1px solid #e5e7eb"><h3>Current Property</h3>${c.currentPropertyType?`<div class="detail-item">Type: ${c.currentPropertyType}</div>`:''}${c.currentPropertyLocation?`<div class="detail-item">Location: ${c.currentPropertyLocation}</div>`:''}</div>`:''}
+                    ${c.desiredPropertyType||c.desiredPropertyLocation?`<div class="detail-section" style="margin-top:24px;padding-top:24px;border-top:1px solid #e5e7eb"><h3>Desired Property</h3>${c.desiredPropertyType?`<div class="detail-item">Type: ${c.desiredPropertyType}</div>`:''}${c.desiredPropertyLocation?`<div class="detail-item">Location: ${c.desiredPropertyLocation}</div>`:''}${c.bedrooms?`<div class="detail-item">Bedrooms: ${c.bedrooms}</div>`:''}${c.budget?`<div class="detail-item">Budget: $${c.budget}</div>`:''}</div>`:''}
+                    ${c.notes?`<div class="notes"><h3 style="margin-bottom:8px">Notes</h3><p style="font-size:14px;white-space:pre-wrap">${c.notes}</p></div>`:''}
+                </div>
+            `;
+        }
+
+        function updateStats(){
+            document.getElementById('stat-total').textContent=clients.length;
+            document.getElementById('stat-buyers').textContent=clients.filter(c=>c.leadType==='buyer').length;
+            document.getElementById('stat-sellers').textContent=clients.filter(c=>c.leadType==='seller').length;
+            document.getElementById('stat-tenants').textContent=clients.filter(c=>c.leadType==='tenant').length;
+        }
+
+        function openModal(){
+            editId=null;
+            document.getElementById('modalTitle').textContent='Add New Client';
+            clearForm();
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function editClient(id){
+            const c=clients.find(x=>x.id===id);
+            if(!c)return;
+            editId=id;
+            document.getElementById('modalTitle').textContent='Edit Client';
+            document.getElementById('i-name').value=c.name||'';
+            document.getElementById('i-phone').value=c.phone||'';
+            document.getElementById('i-email').value=c.email||'';
+            document.getElementById('i-nationality').value=c.nationality||'';
+            document.getElementById('i-occupation').value=c.occupation||'';
+            document.getElementById('i-religion').value=c.religion||'';
+            document.getElementById('i-maritalStatus').value=c.maritalStatus||'';
+            document.getElementById('i-kids').value=c.numberOfKids||'';
+            document.getElementById('i-leadType').value=c.leadType||'buyer';
+            document.getElementById('i-curType').value=c.currentPropertyType||'';
+            document.getElementById('i-curLoc').value=c.currentPropertyLocation||'';
+            document.getElementById('i-desType').value=c.desiredPropertyType||'';
+            document.getElementById('i-desLoc').value=c.desiredPropertyLocation||'';
+            document.getElementById('i-beds').value=c.bedrooms||'';
+            document.getElementById('i-budget').value=c.budget||'';
+            document.getElementById('i-notes').value=c.notes||'';
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal(){
+            document.getElementById('modalOverlay').classList.remove('active');
+            clearForm();
+        }
+
+        function clearForm(){
+            document.getElementById('i-name').value='';
+            document.getElementById('i-phone').value='';
+            document.getElementById('i-email').value='';
+            document.getElementById('i-nationality').value='';
+            document.getElementById('i-occupation').value='';
+            document.getElementById('i-religion').value='';
+            document.getElementById('i-maritalStatus').value='';
+            document.getElementById('i-kids').value='';
+            document.getElementById('i-leadType').value='buyer';
+            document.getElementById('i-curType').value='';
+            document.getElementById('i-curLoc').value='';
+            document.getElementById('i-desType').value='';
+            document.getElementById('i-desLoc').value='';
+            document.getElementById('i-beds').value='';
+            document.getElementById('i-budget').value='';
+            document.getElementById('i-notes').value='';
+        }
+
+        function saveClient(){
+            const name=document.getElementById('i-name').value.trim();
+            const phone=document.getElementById('i-phone').value.trim();
+            if(!name||!phone){alert('Name and phone required');return;}
+            const client={
+                id:editId||'c_'+Date.now(),
+                name,phone,
+                email:document.getElementById('i-email').value.trim(),
+                nationality:document.getElementById('i-nationality').value.trim(),
+                occupation:document.getElementById('i-occupation').value.trim(),
+                religion:document.getElementById('i-religion').value,
+                maritalStatus:document.getElementById('i-maritalStatus').value,
+                numberOfKids:document.getElementById('i-kids').value,
+                leadType:document.getElementById('i-leadType').value,
+                currentPropertyType:document.getElementById('i-curType').value,
+                currentPropertyLocation:document.getElementById('i-curLoc').value.trim(),
+                desiredPropertyType:document.getElementById('i-desType').value,
+                desiredPropertyLocation:document.getElementById('i-desLoc').value.trim(),
+                bedrooms:document.getElementById('i-beds').value.trim(),
+                budget:document.getElementById('i-budget').value.trim(),
+                notes:document.getElementById('i-notes').value.trim()
+            };
+            if(editId){
+                const idx=clients.findIndex(c=>c.id===editId);
+                clients[idx]=client;
+                sel=client;
+            }else{
+                clients.push(client);
+                sel=client;
+            }
+            save();renderDetail();closeModal();
+        }
+
+        function deleteClient(id){
+            if(confirm('Delete this client?')){
+                clients=clients.filter(c=>c.id!==id);
+                sel=null;
+                save();renderDetail();
+            }
+        }
+
+        function openWA(phone,name){
+            const clean=phone.replace(/[^\d]/g,'');
+            const formatted=clean.startsWith('65')?clean:'65'+clean;
+            const msg=`Hi ${name}, this is your ERA property agent. I wanted to follow up with you regarding your property search.`;
+            window.open(`https://wa.me/${formatted}?text=${encodeURIComponent(msg)}`,'_blank');
+        }
+
+        document.getElementById('searchInput').addEventListener('input',render);
+        document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+    </script>
+</body>
+</html>
