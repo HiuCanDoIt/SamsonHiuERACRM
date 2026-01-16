@@ -90,6 +90,14 @@
         let clients=[];let sel=null;let editId=null;
         loadClients();addSample();
 
+        // Escape HTML to prevent XSS attacks
+        function escapeHtml(text){
+            if(!text)return '';
+            const div=document.createElement('div');
+            div.textContent=text;
+            return div.innerHTML;
+        }
+
         function loadClients(){
             const s=localStorage.getItem('era_clients');
             if(s){clients=JSON.parse(s);render();updateStats();}
@@ -113,7 +121,7 @@
             document.getElementById('clientListHeader').textContent=`Clients & Leads (${filtered.length})`;
             const list=document.getElementById('clientList');
             if(filtered.length===0){list.innerHTML='<div class="empty-state"><p>No clients found</p></div>';return;}
-            list.innerHTML=filtered.map(c=>`<div class="client-item ${sel?.id===c.id?'active':''}" onclick="selectClient('${c.id}')"><div class="client-name">${c.name}</div><div class="client-phone">${c.phone}</div><span class="badge badge-${c.leadType}">${c.leadType}</span></div>`).join('');
+            list.innerHTML=filtered.map(c=>`<div class="client-item ${sel?.id===c.id?'active':''}" onclick="selectClient('${escapeHtml(c.id)}')"><div class="client-name">${escapeHtml(c.name)}</div><div class="client-phone">${escapeHtml(c.phone)}</div><span class="badge badge-${escapeHtml(c.leadType)}">${escapeHtml(c.leadType)}</span></div>`).join('');
         }
 
         function selectClient(id){
@@ -124,29 +132,30 @@
         function renderDetail(){
             if(!sel){document.getElementById('clientDetails').innerHTML='<div class="empty-state"><p>Select a client</p></div>';return;}
             const c=sel;
+            const esc=escapeHtml;
             document.getElementById('clientDetails').innerHTML=`
                 <div class="client-details">
                     <div class="details-header">
-                        <div><div class="details-name">${c.name}</div><span class="badge badge-${c.leadType}">${c.leadType}</span></div>
+                        <div><div class="details-name">${esc(c.name)}</div><span class="badge badge-${esc(c.leadType)}">${esc(c.leadType)}</span></div>
                         <div class="btn-group">
-                            <button class="btn-icon" onclick="openWA('${c.phone}','${c.name}')" title="WhatsApp">💬</button>
-                            <button class="btn-icon" onclick="editClient('${c.id}')">✏️</button>
-                            <button class="btn-icon" onclick="deleteClient('${c.id}')">🗑️</button>
+                            <button class="btn-icon" onclick="openWA('${esc(c.phone)}','${esc(c.name)}')" title="WhatsApp">💬</button>
+                            <button class="btn-icon" onclick="editClient('${esc(c.id)}')">✏️</button>
+                            <button class="btn-icon" onclick="deleteClient('${esc(c.id)}')">🗑️</button>
                         </div>
                     </div>
                     <div class="details-grid">
-                        <div class="detail-section"><h3>Contact</h3><div class="detail-item">📞 <a href="tel:${c.phone}">${c.phone}</a></div>${c.email?`<div class="detail-item">📧 ${c.email}</div>`:''}</div>
+                        <div class="detail-section"><h3>Contact</h3><div class="detail-item">📞 <a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></div>${c.email?`<div class="detail-item">📧 ${esc(c.email)}</div>`:''}</div>
                         <div class="detail-section"><h3>Personal</h3>
-                            ${c.nationality?`<div class="detail-item">Nationality: ${c.nationality}</div>`:''}
-                            ${c.occupation?`<div class="detail-item">Occupation: ${c.occupation}</div>`:''}
-                            ${c.religion?`<div class="detail-item">Religion: ${c.religion}</div>`:''}
-                            ${c.maritalStatus?`<div class="detail-item">Marital: ${c.maritalStatus}</div>`:''}
-                            ${c.numberOfKids?`<div class="detail-item">Kids: ${c.numberOfKids}</div>`:''}
+                            ${c.nationality?`<div class="detail-item">Nationality: ${esc(c.nationality)}</div>`:''}
+                            ${c.occupation?`<div class="detail-item">Occupation: ${esc(c.occupation)}</div>`:''}
+                            ${c.religion?`<div class="detail-item">Religion: ${esc(c.religion)}</div>`:''}
+                            ${c.maritalStatus?`<div class="detail-item">Marital: ${esc(c.maritalStatus)}</div>`:''}
+                            ${c.numberOfKids?`<div class="detail-item">Kids: ${esc(c.numberOfKids)}</div>`:''}
                         </div>
                     </div>
-                    ${c.currentPropertyType||c.currentPropertyLocation?`<div class="detail-section" style="margin-top:24px;padding-top:24px;border-top:1px solid #e5e7eb"><h3>Current Property</h3>${c.currentPropertyType?`<div class="detail-item">Type: ${c.currentPropertyType}</div>`:''}${c.currentPropertyLocation?`<div class="detail-item">Location: ${c.currentPropertyLocation}</div>`:''}</div>`:''}
-                    ${c.desiredPropertyType||c.desiredPropertyLocation?`<div class="detail-section" style="margin-top:24px;padding-top:24px;border-top:1px solid #e5e7eb"><h3>Desired Property</h3>${c.desiredPropertyType?`<div class="detail-item">Type: ${c.desiredPropertyType}</div>`:''}${c.desiredPropertyLocation?`<div class="detail-item">Location: ${c.desiredPropertyLocation}</div>`:''}${c.bedrooms?`<div class="detail-item">Bedrooms: ${c.bedrooms}</div>`:''}${c.budget?`<div class="detail-item">Budget: $${c.budget}</div>`:''}</div>`:''}
-                    ${c.notes?`<div class="notes"><h3 style="margin-bottom:8px">Notes</h3><p style="font-size:14px;white-space:pre-wrap">${c.notes}</p></div>`:''}
+                    ${c.currentPropertyType||c.currentPropertyLocation?`<div class="detail-section" style="margin-top:24px;padding-top:24px;border-top:1px solid #e5e7eb"><h3>Current Property</h3>${c.currentPropertyType?`<div class="detail-item">Type: ${esc(c.currentPropertyType)}</div>`:''}${c.currentPropertyLocation?`<div class="detail-item">Location: ${esc(c.currentPropertyLocation)}</div>`:''}</div>`:''}
+                    ${c.desiredPropertyType||c.desiredPropertyLocation?`<div class="detail-section" style="margin-top:24px;padding-top:24px;border-top:1px solid #e5e7eb"><h3>Desired Property</h3>${c.desiredPropertyType?`<div class="detail-item">Type: ${esc(c.desiredPropertyType)}</div>`:''}${c.desiredPropertyLocation?`<div class="detail-item">Location: ${esc(c.desiredPropertyLocation)}</div>`:''}${c.bedrooms?`<div class="detail-item">Bedrooms: ${esc(c.bedrooms)}</div>`:''}${c.budget?`<div class="detail-item">Budget: $${esc(c.budget)}</div>`:''}</div>`:''}
+                    ${c.notes?`<div class="notes"><h3 style="margin-bottom:8px">Notes</h3><p style="font-size:14px;white-space:pre-wrap">${esc(c.notes)}</p></div>`:''}
                 </div>
             `;
         }
